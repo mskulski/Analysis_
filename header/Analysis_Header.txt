@@ -1,0 +1,10 @@
+/afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to run data (leave blank for same directory)
+/afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to current data (leave blank for same directory)
+/afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to cut files (leave blank for same directory)
+./# path to where you'd like to save (for data, plots)
+1 # scaler interval length in seconds
+3 # MFC to reference for calculating concentrations.  1 = MFC1, 2 = MFC2, 3 = MFC1+MFC2 (for multiple stables on the MFCs)
+10 # time duration for smoothing ( displays visual trend only, no data output). must be integer multiple of scaler interval
+1 # plot the data? 1 for yes, 0 for no (though in reality, any integer other than 1 will not create a plot) 
+1 # write the data to file? 1 for yes, 0 for no (though in reality, any integer other than 1 will not write to file) 
+0 # number of cuts to use in the analysis
