@@ -1,4 +1,6 @@
-/afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to run data (leave blank for same directory)
+/afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to run data (.root) (leave blank for same directory)
+# path to run data (.evt)
+# path to evt2root executable
 /afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to current data (leave blank for same directory)
 /afs/crc.nd.edu/user/a/ams/evt2root_test/evt2root/build/# path to cut files (leave blank for same directory)
 ./# path to where you'd like to save (for data, plots)

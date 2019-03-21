@@ -20,6 +20,7 @@
 #include "TCanvas.h"
 #include "TMath.h"
 #include "TGraphErrors.h"
+#include <unistd.h>
 using namespace std;
 
 // call the system to load the .c files with the functions used in the analysis
@@ -33,9 +34,11 @@ gROOT->ProcessLine(".L ./code/CleanUp.c");			// clears variables, vectors (in ca
 
 // declare variables
 
-TString path_to_run_data = ""; 		// relative path to run .root files
-TString path_to_current_data = ""; 	// relative path to current data files
-TString path_to_cut_data = ""; 		// relative path to cut creation files
+TString path_to_root_data = ""; 	// path to run .root files
+TString path_to_evt_data = "";		// path to run .evt files
+TString path_to_evt2root = "";		// path to evt2root executable
+TString path_to_current_data = ""; 	// path to current data files
+TString path_to_cut_data = ""; 		// path to cut creation files
 TString path_to_write = "";
 TString cut_name = ""; 				// name of all cuts joined with &'s, used for output .txt file only
 
@@ -49,6 +52,7 @@ Int_t long_int; 			// time used to smooth the data for visual use only on the ou
 Int_t num_cuts = 0; 		// number of cuts used in the analysis.  assigned in the header file
 Int_t plot = 0;				// whether to plot the data (1) or not. assigned in the header file
 Int_t write = 0;            // whether to write the data to file (1) or not. assigned in the header file
+Int_t file_found = 0;		// = 1, whether the .root file was found, or if not, was successfully created
 
 Double_t concentration_std_dev = 0;		// standard deviation of the point-by-point calculated concentrations
 
@@ -92,6 +96,11 @@ void Analysis(Int_t run)
 	Header();
 	CurrentAnalysis();
 	ScalerAnalysis();
+	
+	if(file_found != 1)
+	{
+		return;
+	}
 	
 	for(int i=0;i<num_scaler_int;i++)
 	{

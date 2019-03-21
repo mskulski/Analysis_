@@ -2,13 +2,45 @@
 
 void ScalerAnalysis()
 {
-	stringstream runstream; //dynamically creates the root file name from run_n for opening the file
-	runstream << path_to_run_data << "run" << run_num << ".root";
-	TString file = runstream.str();
+	// dynamically creates a string with the .root file name from the .root directory and run_num for opening the file	
 	
-	cout << file << endl;
+	stringstream root_stream;
+	root_stream << path_to_root_data << "run" << run_num << ".root";	
+	TString root_file = root_stream.str();
 	
-	TFile *tfile = TFile::Open(file);
+	if( access(root_file.c_str(),F_OK) == -1)//if the .root file isn't found
+	{
+		cout << root_file << " not found.  Looking for .evt file in the provided .evt file directory ..." << endl;
+		
+		//dynamically creates a string with the .evt file name from the .evt directory for running evt2root
+		
+		stringstream evt_stream; 
+		evt_stream << path_to_evt_data << "run" << run_num << "-4096.evt";
+		TString evt_file = evt_stream.str();
+		
+		if( access(evt_file.c_str(),F_OK) != -1)//if the .evt file is found
+		{
+			cout << evt_file << " exists.  Attempting to run evt2root on " << evt_file << "..." << endl;
+			
+			stringstream evt2root_stream;
+			evt2root_stream << path_to_evt2root << "evt2root " << evt_file << " " << root_file << endl;
+			
+			FILE* evt2root_pipe = popen(evt2root_stream.c_str(),"w");//runs evt2root from the .evt file to the place where the .root file was expected
+			evt2root_pipe.close();
+			
+			if( access(root_file.c_str(),F_OK) == -1)//if the .root file isn't found a second time (assumes that all subsequent attempts wouldn't work, so it exits)
+			{
+				cout << "Attempt to create " << root_file << " failed.  No analysis performed for run " << run_num << " ..." << endl;
+				return;
+			}
+			else
+			{
+				file_found = 1;
+			}
+		}
+	}
+	
+	TFile *tfile = TFile::Open(root_file);
 	
 	TCutG* cutg[20]; //cuts for spectra - 20 is chosen since the real number should be less (increase if needed)
 	TCut* cut[20];

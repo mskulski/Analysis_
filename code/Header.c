@@ -19,34 +19,40 @@ void Header()
 		{
 			switch(read_lines)
 			{
-				case 1: path_to_run_data = line;
-						break;
-					
-				case 2: path_to_current_data = line;
-						break;
-					
-				case 3: path_to_cut_data = line;
+				case 1: path_to_root_data = line;	// location to find .root files
 						break;
 						
-				case 4: path_to_write = line;
+				case 2: path_to_evt_data = line;	// location to find .evt files in case the .root file for the run is not found
 						break;
 						
-				case 5: scaler_int = atoi(line.c_str());
+				case 3: path_to_evt2root = line;	// location to find the evt2root executable to create a .root file from the .evt file if a .root is not found
 						break;
 					
-				case 6: MFC_ref = atoi(line.c_str());
+				case 4: path_to_current_data = line;
 						break;
 					
-				case 7: long_int = atoi(line.c_str());
+				case 5: path_to_cut_data = line;
+						break;
+						
+				case 6: path_to_write = line;
+						break;
+						
+				case 7: scaler_int = atoi(line.c_str());
 						break;
 					
-				case 8: plot = atoi(line.c_str());
+				case 8: MFC_ref = atoi(line.c_str());
 						break;
 					
-				case 9: write = atoi(line.c_str());
+				case 9: long_int = atoi(line.c_str());
 						break;
 					
-				case 10: num_cuts = atoi(line.c_str());
+				case 10: plot = atoi(line.c_str());
+						break;
+					
+				case 11: write = atoi(line.c_str());
+						break;
+					
+				case 12: num_cuts = atoi(line.c_str());
 						break;
 			}
 		}
@@ -63,7 +69,7 @@ void Header()
 	
 	if(long_int%scaler_int != 0)
 	{
-		cout << "Time division selected not integer multiple of scaler interval, defaulting to long_int = scaler_int" << endl;
+		cout << "Long interval selected not integer multiple of scaler interval, defaulting to long_int = scaler_int" << endl;
 		long_int = scaler_int;
 	}
 }
